@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { Link, useLocation } from "react-router-dom"
-import { Menu, X, Play, Palette, User, Phone, HelpCircle, Briefcase, FileText, Star } from "lucide-react"
+import { Menu, X, Play, Palette, User, Phone, CircleHelp as HelpCircle, Briefcase, FileText, Star } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { LanguageSelector } from "@/components/language-selector"
