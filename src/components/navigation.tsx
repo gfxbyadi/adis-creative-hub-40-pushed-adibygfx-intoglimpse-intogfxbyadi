@@ -3,22 +3,25 @@ import { Link, useLocation } from "react-router-dom"
 import { Menu, X, Play, Palette, User, Phone, HelpCircle, Briefcase, FileText, Star } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { ThemeToggle } from "@/components/theme-toggle"
+import { LanguageSelector } from "@/components/language-selector"
+import { useLanguage } from "@/hooks/use-language"
 import { cn } from "@/lib/utils"
 
-const navigation = [
-  { name: "Home", href: "/", icon: Play },
-  { name: "Portfolio", href: "/portfolio", icon: Palette },
-  { name: "Services", href: "/services", icon: Briefcase },
-  { name: "About", href: "/about", icon: User },
-  { name: "Testimonials", href: "/testimonials", icon: Star },
-  { name: "Blog", href: "/blog", icon: FileText },
-  { name: "FAQ", href: "/faq", icon: HelpCircle },
-  { name: "Contact", href: "/contact", icon: Phone },
+const navigationItems = [
+  { key: "home", href: "/", icon: Play },
+  { key: "portfolio", href: "/portfolio", icon: Palette },
+  { key: "services", href: "/services", icon: Briefcase },
+  { key: "about", href: "/about", icon: User },
+  { key: "testimonials", href: "/testimonials", icon: Star },
+  { key: "blog", href: "/blog", icon: FileText },
+  { key: "faq", href: "/faq", icon: HelpCircle },
+  { key: "contact", href: "/contact", icon: Phone },
 ]
 
 export function Navigation() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const location = useLocation()
+  const { t } = useLanguage()
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
@@ -37,11 +40,11 @@ export function Navigation() {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
-            {navigation.map((item) => {
+            {navigationItems.map((item) => {
               const Icon = item.icon
               return (
                 <Link
-                  key={item.name}
+                  key={item.key}
                   to={item.href}
                   className={cn(
                     "flex items-center space-x-1 px-3 py-2 rounded-lg text-sm font-medium transition-smooth",
@@ -51,24 +54,26 @@ export function Navigation() {
                   )}
                 >
                   <Icon className="h-4 w-4" />
-                  <span>{item.name}</span>
+                  <span>{t(`nav.${item.key}`)}</span>
                 </Link>
               )
             })}
           </div>
 
           {/* Desktop CTA & Theme Toggle */}
-          <div className="hidden md:flex items-center space-x-4">
+          <div className="hidden md:flex items-center space-x-2">
+            <LanguageSelector />
             <ThemeToggle />
             <Link to="/contact">
               <Button className="bg-gradient-youtube hover:shadow-glow transition-all duration-300 font-medium">
-                Hire Me Now
+                {t("nav.hireMe")}
               </Button>
             </Link>
           </div>
 
           {/* Mobile menu button */}
           <div className="md:hidden flex items-center space-x-2">
+            <LanguageSelector />
             <ThemeToggle />
             <Button
               variant="ghost"
@@ -88,11 +93,11 @@ export function Navigation() {
         {/* Mobile Navigation */}
         {mobileMenuOpen && (
           <div className="md:hidden py-4 space-y-2 border-t border-border mt-4">
-            {navigation.map((item) => {
+            {navigationItems.map((item) => {
               const Icon = item.icon
               return (
                 <Link
-                  key={item.name}
+                  key={item.key}
                   to={item.href}
                   onClick={() => setMobileMenuOpen(false)}
                   className={cn(
@@ -103,14 +108,14 @@ export function Navigation() {
                   )}
                 >
                   <Icon className="h-5 w-5" />
-                  <span>{item.name}</span>
+                  <span>{t(`nav.${item.key}`)}</span>
                 </Link>
               )
             })}
             <div className="pt-4 px-4">
               <Link to="/contact">
                 <Button className="w-full bg-gradient-youtube hover:shadow-glow transition-all duration-300 font-medium">
-                  Hire Me Now
+                  {t("nav.hireMe")}
                 </Button>
               </Link>
             </div>
